@@ -1,14 +1,13 @@
-import express, { Request, Response } from 'express';
-//import User from '../models/user.js';
+import express from 'express';
 
 import * as userControls from "../controllers/userControllers.js"
 
 const route = express.Router();
 
-route.get('/', (_req: Request, res: Response) => {
-	res.send('OK');
-});
+// GET a list of all users
+route.get('/', userControls.getAllUsers);
 
+// SIGN-UP a new user
 route.post('/sign-up', userControls.createUser);
 
 export default route;

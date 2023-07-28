@@ -45,3 +45,19 @@ export const createUser = async (req: Request, res: Response) => {
 		console.log(error);
 	}
 };
+
+export const getAllUsers = async (_req: Request, res: Response) => {
+	try {
+		// we exclude the password field, as we don't want that to be publicaly accessible
+		const users = await User.find({}, {password: 0}).exec();
+		if(!users) {
+			// no users in db?
+			res.status(400).json({success: false, errors: null, data: null});
+			return;
+		}
+
+		res.json({success: true, errors: null, data: users});
+	} catch (error) {
+		console.log(error);
+	}
+};
