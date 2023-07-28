@@ -9,6 +9,6 @@ route.get('/', (_req: Request, res: Response) => {
 	res.send('OK');
 });
 
-route.post('/', userControls.createUser);
+route.post('/sign-up', userControls.createUser);
 
 export default route;
