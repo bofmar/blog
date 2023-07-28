@@ -3,6 +3,8 @@ import z from "zod";
 import User, { TUser } from "../models/user.js";
 import bcrypt from "bcryptjs";
 
+// TODO: Currently we are just console logging the errors. We should implement propper error handling on top of that.
+
 const ZUser = z.object({
 	username: z.string({required_error: "Please provide a username."}).trim().min(2, {message: 'Usernames must be at least 2 characters long.'}),
 	password: z.string({required_error: "Pleases provide a password."}).trim().min(6, {message: 'Passwords must be at least 6 characters long.'}),
@@ -61,3 +63,19 @@ export const getAllUsers = async (_req: Request, res: Response) => {
 		console.log(error);
 	}
 };
+
+export const getUser = async (req: Request, res: Response) => {
+	try {
+		// we exclude the password field, as we don't want that to be publicaly accessible
+		const user = await User.findById(req.params.userId, {password: 0});
+		if(!user) {
+			res.status(400).json({success: false, errors: null, data: null});
+			return;
+		}
+
+		res.json({success: true, errors: null, data: user});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
