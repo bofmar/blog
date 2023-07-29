@@ -1,4 +1,4 @@
-// TO DO:
+// TODO:
 // This is just a stub. We need to create a propper schema
 // when we have the info of what our posts will look like.
 import mongoose from "mongoose";

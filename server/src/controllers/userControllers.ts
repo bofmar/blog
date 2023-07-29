@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import z from "zod";
 import User, { TUser } from "../models/user.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // TODO: Currently we are just console logging the errors. We should implement propper error handling on top of that.
 
@@ -79,3 +83,32 @@ export const getUser = async (req: Request, res: Response) => {
 	}
 };
 
+export const loginUser = async (req: Request, res: Response) => {
+	try {
+		const validationResult = validateUser(req.body);
+		if(!validationResult.success) {
+			res.status(400).json({success: false, errors: validationResult.error.flatten(), data: req.body});
+			return;
+		}
+
+		const user = await User.findOne({username: req.body.username});
+		if(!user) {
+			res.status(401).json({success: false, errors: null, data: null});
+			return;
+		} 
+
+		bcrypt.compare(req.body.password, user.password, (_err, success) => {
+			if(success) {
+				const secret = process.env.SECRET as string;
+				const token = jwt.sign({username: user.username}, secret, {expiresIn: '12h'}); 
+				return res.json({message: "Auth passed", token});
+			} else {
+				res.status(401).json({success: false, errors: null, data: null});
+				return;
+			}
+		});
+
+	} catch (error) {
+		console.log(error);
+	}
+};
