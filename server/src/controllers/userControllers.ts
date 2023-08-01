@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import z from "zod";
 import User, { TUser } from "../models/user.js";
 import bcrypt from "bcryptjs";
@@ -18,7 +18,7 @@ function validateUser(user: TUser) {
 	return ZUser.safeParse(user);
 }
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const validationResult = validateUser(req.body);
 		if(!validationResult.success) {
@@ -48,11 +48,11 @@ export const createUser = async (req: Request, res: Response) => {
 		await newUser.save();
 		res.json({success: true, errors: null, data: newUser});
 	} catch (error){
-		console.log(error);
+		next(error);
 	}
 };
 
-export const getAllUsers = async (_req: Request, res: Response) => {
+export const getAllUsers = async (_req: Request, res: Response, next: NextFunction) => {
 	try {
 		// we exclude the password field, as we don't want that to be publicaly accessible
 		const users = await User.find({}, {password: 0}).exec();
@@ -64,11 +64,11 @@ export const getAllUsers = async (_req: Request, res: Response) => {
 
 		res.json({success: true, errors: null, data: users});
 	} catch (error) {
-		console.log(error);
+		next(error);
 	}
 };
 
-export const getUser = async (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		// we exclude the password field, as we don't want that to be publicaly accessible
 		const user = await User.findById(req.params.userId, {password: 0});
@@ -79,11 +79,11 @@ export const getUser = async (req: Request, res: Response) => {
 
 		res.json({success: true, errors: null, data: user});
 	} catch (error) {
-		console.log(error);
+		next(error);
 	}
 };
 
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const validationResult = validateUser(req.body);
 		if(!validationResult.success) {
@@ -109,6 +109,6 @@ export const loginUser = async (req: Request, res: Response) => {
 		});
 
 	} catch (error) {
-		console.log(error);
+		next(error);
 	}
 };

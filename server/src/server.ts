@@ -21,6 +21,12 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 const SECRET = process.env.SECRET;
 
+function printError(err: any) {
+	console.log('==========ERROR==========');
+	console.error(err.stack);
+	console.log('==========+END+==========')
+}
+
 passport.use(jwtStrategy);
 
 passport.serializeUser(function(user: any, done) {
@@ -71,4 +77,13 @@ app.get('/', (_req: Request, res: Response) => {
 // TODO: Remove this, it's only here for testing
 app.get("/protected", passport.authenticate('jwt', { session: false }), (_req, res) => {
     return res.status(200).send("YAY! this is a protected Route")
+});
+
+app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
+	printError(err);
+	if (res.headersSent) {
+		return next(err);
+	}
+
+	res.status(500).send({success: false, errors: err, data: null});
 });
