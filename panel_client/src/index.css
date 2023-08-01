@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.btn-primary {
+		@apply py-2 px-4 bg-neon-green text-white font-semibold rounded-none shadow-md hover:bg-off-green focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+	}
+
+	.btn-secondary {
+		@apply py-2 px-4 bg-red-500 text-white font-semibold rounded-none shadow-md hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+	}
+}
+
