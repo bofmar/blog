@@ -66,7 +66,6 @@ export const createComment = async (req: Request, res: Response, next: NextFunct
 		const comment = new Comment({
 			text: req.body.comment,
 			createdBy: user,
-			likes: 0
 		});
 
 		await comment.save();
@@ -97,11 +96,41 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
 
 		// the only one who should be able to delete a comment is the user
 		// who created it or the admin.
-		if (comment.createdBy._id !== user._id && user.authLevel !== 'ADMIN') {
+		if (!comment.createdBy._id.equals(user._id) && user.authLevel !== 'ADMIN') {
 			return res.status(403).json({success: false, errors: null, data: null});
 		}
 
 		await Comment.findByIdAndDelete(comment._id).exec();	
+		res.send({success: true, errors: null, data: comment});
+	} catch (error) {
+		next(error);
+	}
+}
+
+export const updateComment = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const bearerHeader = req.headers['authorization'];
+		if (bearerHeader === undefined) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+		const payload = getPayloadFromHeader(bearerHeader) as JwtPayload;
+
+		const user = await User.findOne({username: payload.username}).exec();
+
+		if (!user) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+
+		const comment = await Comment.findById(req.params.commentId).populate('createdBy').exec();
+		if (!comment) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+
+		if (!comment.createdBy._id.equals(user._id)) {
+			return res.status(403).json({success: false, errors: null, data: null});
+		}
+
+		await Comment.findByIdAndUpdate(comment._id, {text: req.body.comment}).exec();	
 		res.send({success: true, errors: null, data: comment});
 	} catch (error) {
 		next(error);
