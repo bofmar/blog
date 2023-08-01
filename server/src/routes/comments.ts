@@ -17,4 +17,6 @@ route.get('/:commentId', commentsControls.oneComment);
 
 route.post('/', passport.authenticate('jwt', { session: false }), commentsControls.createComment);
 
+route.delete('/:commentId', passport.authenticate('jwt', { session: false }), commentsControls.deleteComment);
+
 export default route;
