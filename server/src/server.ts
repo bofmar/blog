@@ -87,3 +87,7 @@ app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
 
 	res.status(500).send({success: false, errors: err, data: null});
 });
+
+app.use((_req: Request, res: Response) => {
+	res.status(404).send({success: false, errors: null, data: null})
+});
