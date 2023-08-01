@@ -65,11 +65,6 @@ app.use('/api/posts', postRoute);
 app.use('/api/users', userRoute);
 app.use('/api/comments', commentsRoute);
 
-app.use( (req: Request, res: Response, next: NextFunction) => {
-	res.locals.currentUser = req.user;
-	next();
-});
-
 app.get('/', (_req: Request, res: Response) => {
 	res.json({msg: 'Hi'});
 });
