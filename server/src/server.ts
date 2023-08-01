@@ -69,11 +69,6 @@ app.get('/', (_req: Request, res: Response) => {
 	res.json({msg: 'Hi'});
 });
 
-// TODO: Remove this, it's only here for testing
-app.get("/protected", passport.authenticate('jwt', { session: false }), (_req, res) => {
-    return res.status(200).send("YAY! this is a protected Route")
-});
-
 app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
 	printError(err);
 	if (res.headersSent) {
