@@ -1,13 +1,18 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+
+import * as commentsControls from "../controllers/commentsControllers.js"
+
+// TODO:
+// Get all comments
+// Get all by user
+// Get one by id
+// Post new comment
+// Delete comment
+// Update comment
 
 const route = express.Router();
 
-route.get('/', (_req: Request, res: Response) => {
-	res.send('OK');
-});
+route.get('/', commentsControls.allComments);
 
-route.post('/', (_req: Request, res: Response) => {
-	res.send('OK');
-});
 
 export default route;

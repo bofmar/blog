@@ -7,8 +7,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// TODO: Currently we are just console logging the errors. We should implement propper error handling on top of that.
-
 const ZUser = z.object({
 	username: z.string({required_error: "Please provide a username."}).trim().min(2, {message: 'Usernames must be at least 2 characters long.'}),
 	password: z.string({required_error: "Pleases provide a password."}).trim().min(6, {message: 'Passwords must be at least 6 characters long.'}),
