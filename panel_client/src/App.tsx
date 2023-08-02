@@ -1,8 +1,10 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css'
-import LogIn from './components/LogIn';
-import NewPost from './components/NewPost';
 import 'react-toastify/dist/ReactToastify.css';
+import LogIn from './components/LogIn';
+import PostHandler from './components/PostHandler';
+import { AuthContextProvider } from './hooks/AuthContext';
+import RequireAuth from './components/RequireAuth';
 
 const router = createBrowserRouter([
 	{
@@ -11,14 +13,16 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/control-panel',
-		element: <NewPost />
+		element: <RequireAuth children={<PostHandler />} />
 	}
 ]);
 
 function App() {
 	return (
 	<div className='bg-gradient-to-br from-zinc-950 to-zinc-800 h-screen'>
-		<RouterProvider router={router} />
+		<AuthContextProvider>
+			<RouterProvider router={router} />
+		</AuthContextProvider>
 	</div>
 	);
 }

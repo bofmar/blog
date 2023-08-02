@@ -1,7 +1,8 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import z from 'zod';
+import { AuthContext } from "../hooks/AuthContext";
 
 const ZUser = z.object({
 	username: z.string({required_error: "Please provide a username."}).trim().min(2, {message: 'Usernames must be at least 2 characters long.'}),
@@ -17,6 +18,7 @@ export default function LogIn() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [formErrors, setFormErrors] = useState<IErrors>({username: [], password: []});
+	const Auth = useContext(AuthContext);
 	const navigate = useNavigate();
 	const url = 'http://localhost:5000/api/users/admin-log-in';
 
@@ -66,6 +68,7 @@ export default function LogIn() {
 		}
 
 		localStorage.setItem('mario-blog-key', data.token);
+		Auth?.logIn();
 
 		toast.update(loadToast, {render: 'Loged in successfully',
 			type: 'success', isLoading: false, autoClose: delay});

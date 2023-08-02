@@ -2,7 +2,11 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useRef, useState } from 'react';
 import { Writer } from 'tinymce';
 
-export default function NewPost() {
+interface IPostHandlerProps {
+	initialValue?: string
+}
+
+export default function PostHandler({initialValue = "<h1>What are you going to blog about today?</h1>"}: IPostHandlerProps ) {
 	const [editing, setEditing] = useState(true);
 	const editorRef = useRef<Writer | null>(null);
 	const previewRef = useRef<HTMLDivElement | null>(null);
@@ -27,7 +31,7 @@ export default function NewPost() {
 			<Editor
 				apiKey={TINY_KEY}
 				onInit={(_evt, editor) => editorRef.current = editor as unknown as Writer}
-				initialValue="<h1>What are you going to blog about today?</h1>"
+				initialValue={initialValue}
 				init={{
 				height: 800,
 				menubar: true,
