@@ -18,6 +18,17 @@ function validatePost(post: TPost) {
 	return ZPost.safeParse(post);
 }
 
+async function authUser(bearerHeader: string | undefined): Promise<boolean> {
+	if (bearerHeader === undefined) {
+		return false;
+	}
+	const secret = process.env.SECRET as string;
+	const payload = getPayloadFromHeader(bearerHeader, secret) as JwtPayload;
+
+	const user = await User.findOne({username: payload.username}).exec();
+	return (user !== null && user.authLevel === 'ADMIN');
+}
+
 export const createPost = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const validationResult = validatePost(req.body);
@@ -26,17 +37,9 @@ export const createPost = async (req: Request, res: Response, next: NextFunction
 			return;
 		}
 
-		const bearerHeader = req.headers['authorization'];
-		if (bearerHeader === undefined) {
-			return res.status(400).json({success: false, errors: null, data: null});
-		}
-		const secret = process.env.SECRET as string;
-		const payload = getPayloadFromHeader(bearerHeader, secret) as JwtPayload;
+		const isAuthorized = await authUser(req.headers['authorization']);
 
-		const user = await User.findOne({username: payload.username}).exec();
-
-		// only the admin can create posts
-		if (!user || user.authLevel !== 'ADMIN') {
+		if (!isAuthorized) {
 			return res.status(400).json({success: false, errors: null, data: null});
 		}
 
