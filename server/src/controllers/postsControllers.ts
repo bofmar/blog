@@ -1,12 +1,3 @@
-/*
-export type TPost = {
-	title: string;
-	summary: string;
-	body: string;
-	likes: number;
-	comments: Array<Types.ObjectId>;
-}
-*/
 import { Request, Response, NextFunction } from "express";
 import z from "zod";
 import BlogPost, { TPost } from "../models/blogPost.js";
@@ -54,7 +45,8 @@ export const createPost = async (req: Request, res: Response, next: NextFunction
 			summary: req.body.summary,
 			body: req.body.body,
 			likes: 0,
-			comments: []
+			comments: [],
+			status: 'UNPUBLISHED'
 		});
 
 		await newPost.save();
