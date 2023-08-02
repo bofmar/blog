@@ -41,7 +41,8 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 		const newUser = new User({
 			username: req.body.username,
 			password: hashedPassword,
-			authLevel: 'USER'
+			authLevel: 'USER',
+			likedPostIds: []
 		});
 
 		await newUser.save();
@@ -162,7 +163,7 @@ export const getAuth = async (req: Request, res: Response, next: NextFunction) =
 			return res.status(400).json({success: false, errors: null, data: null});
 		}
 
-		res.send({success: true, errors: null, data: true});
+		res.send({success: true, errors: null, data: user});
 	} catch (error) {
 		next(error);
 	}
