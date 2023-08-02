@@ -16,4 +16,6 @@ route.post('/sign-up', userControls.createUser);
 // LOG-IN user
 route.post('/log-in', userControls.loginUser);
 
+// LOG-IN admin only
+route.post('/admin-log-in', userControls.loginAdmin);
 export default route;

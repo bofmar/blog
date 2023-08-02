@@ -1,11 +1,12 @@
 import './App.css'
-import NewPost from './components/NewPost';
+import LogIn from './components/LogIn';
+//import NewPost from './components/NewPost';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	return (
-	<div className='bg-zinc-900 h-screen'>
-		<h1 className="text-3xl font-bold underline text-yellow-300" >Hello world!</h1>
-		<NewPost />
+	<div className='bg-gradient-to-br from-zinc-950 to-zinc-800 h-screen'>
+		<LogIn />
 	</div>
 	);
 }

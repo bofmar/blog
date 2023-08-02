@@ -101,7 +101,42 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 				const token = jwt.sign({username: user.username}, secret, {expiresIn: '12h'}); 
 				return res.json({message: "Auth passed", token});
 			} else {
-				res.status(401).json({success: false, errors: null, data: null});
+				res.status(403).json({success: false, errors: null, data: 'Invalid users credentials'});
+				return;
+			}
+		});
+
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const loginAdmin = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const validationResult = validateUser(req.body);
+		if(!validationResult.success) {
+			res.status(400).json({success: false, errors: validationResult.error.flatten(), data: req.body});
+			return;
+		}
+
+		const user = await User.findOne({username: req.body.username});
+		if(!user) {
+			res.status(401).json({success: false, errors: null, data: null});
+			return;
+		} 
+
+		if(user.authLevel !== 'ADMIN') {
+			res.status(403).json({success: false, errors: null, data: 'You do not have administration priviledges. This incident will be reported'});
+			return;
+		}
+
+		bcrypt.compare(req.body.password, user.password, (_err, success) => {
+			if(success) {
+				const secret = process.env.SECRET as string;
+				const token = jwt.sign({username: user.username}, secret, {expiresIn: '12h'}); 
+				return res.json({message: "Auth passed", token});
+			} else {
+				res.status(403).json({success: false, errors: null, data: 'Invalid users credentials'});
 				return;
 			}
 		});
