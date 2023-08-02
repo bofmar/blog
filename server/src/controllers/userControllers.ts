@@ -2,8 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import z from "zod";
 import User, { TUser } from "../models/user.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
+import getPayloadFromHeader from "../helpers/getPayloadFromHeader.js";
 
 dotenv.config();
 
@@ -145,3 +146,24 @@ export const loginAdmin = async (req: Request, res: Response, next: NextFunction
 		next(error);
 	}
 };
+
+export const getAuth = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const bearerHeader = req.headers['authorization'];
+		if (bearerHeader === undefined) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+		const secret = process.env.SECRET as string;
+		const payload = getPayloadFromHeader(bearerHeader, secret) as JwtPayload;
+
+		const user = await User.findOne({username: payload.username}).exec();
+
+		if (!user) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+
+		res.send({success: true, errors: null, data: true});
+	} catch (error) {
+		next(error);
+	}
+}

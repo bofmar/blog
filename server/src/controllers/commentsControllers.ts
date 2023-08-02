@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import Comment from "../models/comment.js";
 import { z } from "zod";
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from "../models/user.js";
+import getPayloadFromHeader from "../helpers/getPayloadFromHeader.js";
 
 dotenv.config();
 
@@ -39,11 +40,6 @@ function validateComment(comment: string) {
 	return ZComment.safeParse(comment);
 }
 
-function getPayloadFromHeader(bearerHeader: string): string | JwtPayload {
-	const token: string = bearerHeader.split(' ')[1] as string;
-	return jwt.verify(token, SECRET);
-}
-
 export const createComment = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const validationResult = validateComment(req.body.comment);
@@ -56,7 +52,7 @@ export const createComment = async (req: Request, res: Response, next: NextFunct
 		if (bearerHeader === undefined) {
 			return res.status(400).json({success: false, errors: null, data: null});
 		}
-		const payload = getPayloadFromHeader(bearerHeader) as JwtPayload;
+		const payload = getPayloadFromHeader(bearerHeader, SECRET) as JwtPayload;
 
 		const user = await User.findOne({username: payload.username}).exec();
 		if (!user) {
@@ -81,7 +77,7 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
 		if (bearerHeader === undefined) {
 			return res.status(400).json({success: false, errors: null, data: null});
 		}
-		const payload = getPayloadFromHeader(bearerHeader) as JwtPayload;
+		const payload = getPayloadFromHeader(bearerHeader, SECRET) as JwtPayload;
 
 		const user = await User.findOne({username: payload.username}).exec();
 
@@ -113,7 +109,7 @@ export const updateComment = async (req: Request, res: Response, next: NextFunct
 		if (bearerHeader === undefined) {
 			return res.status(400).json({success: false, errors: null, data: null});
 		}
-		const payload = getPayloadFromHeader(bearerHeader) as JwtPayload;
+		const payload = getPayloadFromHeader(bearerHeader, SECRET) as JwtPayload;
 
 		const user = await User.findOne({username: payload.username}).exec();
 

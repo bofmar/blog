@@ -7,6 +7,9 @@ const route = express.Router();
 // GET a list of all users
 route.get('/', userControls.getAllUsers);
 
+// Auth user from token
+route.get('/get-auth', userControls.getAuth);
+
 // GET specific user
 route.get('/:userId', userControls.getUser);
 
