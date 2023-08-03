@@ -6,6 +6,7 @@ import ErrorPar from './ErrorPar';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import URI from '../uri';
+// TODO Handle errors
 
 interface IPostHandlerProps {
 	initialValue?: string
