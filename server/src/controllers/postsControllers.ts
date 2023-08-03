@@ -58,3 +58,15 @@ export const createPost = async (req: Request, res: Response, next: NextFunction
 		next(error);
 	}
 }
+
+export const allPosts = async (_req: Request, res: Response, next: NextFunction) => {
+	try {
+		const posts = await BlogPost.find({}).sort({createdAt: -1}).populate('comments').exec();
+		if (!posts || posts.length === 0) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+		res.json({success: true, errors: null, data: posts});
+	} catch (error) {
+		next(error);
+	}
+}
