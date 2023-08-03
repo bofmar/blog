@@ -120,3 +120,33 @@ export const changePublishStatus = async (req: Request, res: Response, next: Nex
 	}
 }
 
+export const updatePost = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const validationResult = validatePost(req.body);
+		if(!validationResult.success) {
+			res.status(400).json({success: false, errors: validationResult.error.flatten(), data: req.body});
+			return;
+		}
+
+		const isAuthorized = await authUser(req.headers['authorization']);
+
+		if (!isAuthorized) {
+			return res.status(403).json({success: false, errors: null, data: 'You do not have administration priviledges. This incident will be reported'});
+		}
+
+		const post = await BlogPost.findById(req.params.postId).populate('comments').exec();
+		if (!post) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+
+		await BlogPost.findByIdAndUpdate(post._id, {
+			'title': req.body.title,
+			'summary': req.body.summary,
+			'body': req.body.body
+		}).exec();
+
+		res.send({success: true, errors: null, data: post});
+	} catch (error) {
+		next(error);
+	}
+}

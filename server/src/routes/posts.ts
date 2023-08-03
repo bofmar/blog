@@ -19,4 +19,6 @@ route.post('/', passport.authorize('jwt'), postControls.createPost);
 
 route.put('/publish/:postId', passport.authorize('jwt'), postControls.changePublishStatus);
 
+route.put('/:postId', passport.authorize('jwt'), postControls.updatePost);
+
 export default route;
