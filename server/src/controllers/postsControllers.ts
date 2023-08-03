@@ -94,3 +94,29 @@ export const postsByLikes = async (_req: Request, res: Response, next: NextFunct
 		next(error);
 	}
 }
+
+export const changePublishStatus = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const isAuthorized = await authUser(req.headers['authorization']);
+
+		if (!isAuthorized) {
+			return res.status(403).json({success: false, errors: null, data: 'You do not have administration priviledges. This incident will be reported'});
+		}
+
+		const post = await BlogPost.findById(req.params.postId).populate('comments').exec();
+		if (!post) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+
+		if (post.status === 'UNPUBLISHED') {
+			await BlogPost.findByIdAndUpdate(post._id, {'status': 'PUBLISHED'}).exec();
+		} else {
+			await BlogPost.findByIdAndUpdate(post._id, {'status': 'UNPUBLISHED'}).exec();
+		}
+
+		res.send({success: true, errors: null, data: post});
+	} catch (error) {
+		next(error);
+	}
+}
+

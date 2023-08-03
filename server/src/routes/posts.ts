@@ -6,9 +6,6 @@ const route = express.Router();
 
 // Routes left
 //
-// get all posts sorted by likes
-// publish post
-// unpublish post
 // edit post
 // delete post
 
@@ -19,5 +16,7 @@ route.get('/byLikes', postControls.postsByLikes);
 route.get('/:postId', postControls.onePost);
 
 route.post('/', passport.authorize('jwt'), postControls.createPost);
+
+route.put('/publish/:postId', passport.authorize('jwt'), postControls.changePublishStatus);
 
 export default route;
