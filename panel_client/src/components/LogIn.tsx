@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import z from 'zod';
 import { AuthContext } from "../hooks/AuthContext";
+import URI from "../uri";
 
 // TODO Handle errors
 
@@ -23,8 +24,7 @@ export default function LogIn() {
 	const token = localStorage.getItem('mario-blog-key') || undefined;
 	const Auth = useContext(AuthContext);
 	const navigate = useNavigate();
-	const url = 'http://localhost:5000/api/users/admin-log-in';
-	const authUrl = 'http://localhost:5000/api/users/get-auth';
+	const Uri = new URI();
 
 	useEffect(() => {
 		if(token === undefined) {
@@ -34,7 +34,7 @@ export default function LogIn() {
 		const abort = new AbortController();
 		async function getAuth() {
 			try {
-				const response = await fetch(authUrl, { 
+				const response = await fetch(Uri.auth, { 
 					signal: abort.signal,
 					mode: 'cors',
 					headers: { 'Authorization' : `BEARER: ${token}` },
@@ -74,7 +74,7 @@ export default function LogIn() {
 			password : password,
 		}
 
-		const response = await fetch(url, {
+		const response = await fetch(Uri.adminLogIn, {
 			method: 'POST',
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json' },
@@ -121,7 +121,7 @@ export default function LogIn() {
 
 	return (
 		<div>
-			<form method='POST' action={url} onSubmit={event => submit(event)}>
+			<form method='POST' onSubmit={event => submit(event)}>
 				<div>
 					<label htmlFor="username">Username</label>
 					<input type="text" id='username' name='username' value={username} onChange={e => setUsername(e.target.value)} />

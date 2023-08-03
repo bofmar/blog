@@ -5,6 +5,7 @@ import z from 'zod';
 import ErrorPar from './ErrorPar';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import URI from '../uri';
 
 interface IPostHandlerProps {
 	initialValue?: string
@@ -29,8 +30,8 @@ export default function PostHandler({initialValue = "<h1>What are you going to b
 	const [title, setTitle] = useState('');
 	const [summary, setSummary] = useState('');
 	const [formErrors, setFormErrors] = useState<IPostErrors>({title: [], summary: [], body: []});
-	const url = 'http://localhost:5000/api/posts/';
 	const navigate = useNavigate();
+	const Uri = new URI();
 
 	const log = () => {
 		if(editorRef.current && previewRef.current) {
@@ -79,7 +80,7 @@ export default function PostHandler({initialValue = "<h1>What are you going to b
 			return
 		}
 
-		const response = await fetch(url, {
+		const response = await fetch(Uri.createPost, {
 			method: 'POST',
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json', 
