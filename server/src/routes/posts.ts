@@ -14,6 +14,8 @@ const route = express.Router();
 
 route.get('/', postControls.allPosts);
 
+route.get('/byLikes', postControls.postsByLikes);
+
 route.get('/:postId', postControls.onePost);
 
 route.post('/', passport.authorize('jwt'), postControls.createPost);
