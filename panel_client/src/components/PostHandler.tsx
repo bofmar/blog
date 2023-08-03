@@ -81,7 +81,7 @@ export default function PostHandler({initialValue = "<h1>What are you going to b
 			return
 		}
 
-		const response = await fetch(Uri.createPost, {
+		const response = await fetch(Uri.Posts, {
 			method: 'POST',
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json', 
