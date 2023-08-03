@@ -18,6 +18,7 @@ const router = createBrowserRouter([
 		path: '/control-panel',
 		element: <RequireAuth children={<ControlPanel />} />,
 		children: [
+			{index: true, element: <AllPosts />},
 			{path: 'new', element: <PostHandler />},
 			{path: 'all', element: <AllPosts />},
 		]
