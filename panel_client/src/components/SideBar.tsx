@@ -8,6 +8,8 @@ export default function SideBar() {
 			<NavLink to='/control-panel/all'>All Posts</NavLink>
 			<NavLink to='/control-panel/unpublished'>Unpablished</NavLink>
 			<NavLink to='/control-panel/new'>New Post</NavLink>
+			<NavLink to='/control-panel/comments'>New Post</NavLink>
+			<NavLink to='/control-panel/users'>New Post</NavLink>
 			<NavLink to='/control-panel/statistics'>Statistics</NavLink>
 		</nav>
 	</aside>
