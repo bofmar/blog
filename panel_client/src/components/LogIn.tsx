@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import z from 'zod';
 import { AuthContext } from "../hooks/AuthContext";
 import URI from "../uri";
+import ErrorPar from "./ErrorPar";
 
 // TODO Handle errors
 
@@ -125,12 +126,12 @@ export default function LogIn() {
 				<div>
 					<label htmlFor="username">Username</label>
 					<input type="text" id='username' name='username' value={username} onChange={e => setUsername(e.target.value)} />
-					{formErrors.username && formErrors.username.map(err => <p key={err}>{err}</p>)}
+					{formErrors.username && formErrors.username.map(err => <ErrorPar key={err} msg={err}/>)}
 				</div>
 				<div>
 					<label htmlFor="password">Password</label>
 					<input type="password" id='password' name='password' value={password} onChange={e => setPassword(e.target.value)} />
-					{formErrors.password && formErrors.password.map(err => <p key={err}>{err}</p>)}
+					{formErrors.password && formErrors.password.map(err => <ErrorPar key={err} msg={err}/>)}
 				</div>
 				<button className="btn-primary">Log In</button>
 			</form>
