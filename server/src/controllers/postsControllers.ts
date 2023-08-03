@@ -70,3 +70,15 @@ export const allPosts = async (_req: Request, res: Response, next: NextFunction)
 		next(error);
 	}
 }
+
+export const onePost = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const post = await BlogPost.findById(req.params.postId).populate('comments').exec();
+		if (!post) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+		res.json({success: true, errors: null, data: post});
+	} catch (error) {
+		next(error);
+	}
+}

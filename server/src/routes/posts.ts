@@ -6,7 +6,6 @@ const route = express.Router();
 
 // Routes left
 //
-// get one post by id
 // get all posts sorted by likes
 // publish post
 // unpublish post
@@ -14,6 +13,8 @@ const route = express.Router();
 // delete post
 
 route.get('/', postControls.allPosts);
+
+route.get('/:postId', postControls.onePost);
 
 route.post('/', passport.authorize('jwt'), postControls.createPost);
 
