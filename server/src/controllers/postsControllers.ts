@@ -40,7 +40,7 @@ export const createPost = async (req: Request, res: Response, next: NextFunction
 		const isAuthorized = await authUser(req.headers['authorization']);
 
 		if (!isAuthorized) {
-			return res.status(400).json({success: false, errors: null, data: null});
+			return res.status(403).json({success: false, errors: null, data: 'You do not have administration priviledges. This incident will be reported'});
 		}
 
 		const newPost = new BlogPost({
