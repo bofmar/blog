@@ -4,11 +4,11 @@ import {} from "react-router-dom";
 export default function SideBar() {
 	return (
 	<aside>
-		<nav>
-			<NavLink to='all'>All Posts</NavLink>
-			<NavLink to='unpublished'>Unpablished</NavLink>
-			<NavLink to='new'>New Post</NavLink>
-			<NavLink to='statistics'>Statistics</NavLink>
+		<nav className="text-white">
+			<NavLink to='/control-panel/all'>All Posts</NavLink>
+			<NavLink to='/control-panel/unpublished'>Unpablished</NavLink>
+			<NavLink to='/control-panel/new'>New Post</NavLink>
+			<NavLink to='/control-panel/statistics'>Statistics</NavLink>
 		</nav>
 	</aside>
 	);

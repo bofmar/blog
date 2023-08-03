@@ -7,6 +7,7 @@ import RequireAuth from './components/RequireAuth';
 import ControlPanel from './components/ControlPanel';
 import PostHandler from './components/PostHandler';
 import AllPosts from './components/AllPosts';
+import EditPost from './components/EditPost';
 
 const router = createBrowserRouter([
 	{
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
 			{path: 'new', element: <PostHandler />},
 			{path: 'all', element: <AllPosts />},
 		]
+	},
+	{
+		path: '/posts/:postId',
+		element: <RequireAuth children={<EditPost />} />
 	}
 ]);
 

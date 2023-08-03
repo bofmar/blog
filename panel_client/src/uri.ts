@@ -17,4 +17,7 @@ export default class URI {
 	get Posts() {
 		return this.combine(this.#Posts);
 	}
+	postId(id: string) {
+		return `${this.combine(this.#Posts)}/${id}`;
+	}
 }

@@ -9,7 +9,9 @@ import URI from '../uri';
 // TODO Handle errors
 
 interface IPostHandlerProps {
-	initialValue?: string
+	initialValue?: string;
+	initialTitle?: string;
+	initialSummary?: string;
 }
 
 interface IPostErrors {
@@ -24,12 +26,16 @@ interface IPayload {
 	body: string;
 }
 
-export default function PostHandler({initialValue = "<h1>What are you going to blog about today?</h1>"}: IPostHandlerProps ) {
+export default function PostHandler({
+	initialValue = "<h1>What are you going to blog about today?</h1>",
+	initialTitle = '',
+	initialSummary = ''
+	}: IPostHandlerProps ) {
 	const [editing, setEditing] = useState(true);
 	const editorRef = useRef<Writer | null>(null);
 	const previewRef = useRef<HTMLDivElement | null>(null);
-	const [title, setTitle] = useState('');
-	const [summary, setSummary] = useState('');
+	const [title, setTitle] = useState(initialTitle);
+	const [summary, setSummary] = useState(initialSummary);
 	const [formErrors, setFormErrors] = useState<IPostErrors>({title: [], summary: [], body: []});
 	const navigate = useNavigate();
 	const Uri = new URI();
