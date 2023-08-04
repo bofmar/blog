@@ -5,6 +5,7 @@ export default class URI {
 	#comments = '/comments';
 	#posts = '/posts';
 	#users = '/users';
+	#publish = '/posts/publish'
 
 	private combine(urlPart: string){
 		return this.base + urlPart
@@ -27,5 +28,8 @@ export default class URI {
 	}
 	get users() {
 		return this.combine(this.#users);
+	}
+	publish(id: string) {
+		return `${this.combine(this.#publish)}/${id}`;
 	}
 }

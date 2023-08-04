@@ -6,7 +6,7 @@ import ErrorPar from './ErrorPar';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import URI from '../uri';
-// TODO Handle errors
+// TODO Change from saving to updating where appropriate
 
 interface IPostHandlerProps {
 	initialValue?: string;
@@ -39,6 +39,7 @@ export default function PostHandler({
 	const [formErrors, setFormErrors] = useState<IPostErrors>({title: [], summary: [], body: []});
 	const navigate = useNavigate();
 	const Uri = new URI();
+	const TINY_KEY = import.meta.env.VITE_TINY_KEY;
 
 	const log = () => {
 		if(editorRef.current && previewRef.current) {
@@ -126,7 +127,6 @@ export default function PostHandler({
 		}
 	}
 
-	const TINY_KEY = import.meta.env.VITE_TINY_KEY;
 
 	return (
 	<div>
