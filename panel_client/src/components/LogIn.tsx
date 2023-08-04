@@ -6,8 +6,6 @@ import { AuthContext } from "../hooks/AuthContext";
 import URI from "../uri";
 import ErrorPar from "./ErrorPar";
 
-// TODO Handle errors
-
 const ZUser = z.object({
 	username: z.string({required_error: "Please provide a username."}).trim().min(2, {message: 'Usernames must be at least 2 characters long.'}),
 	password: z.string({required_error: "Pleases provide a password."}).trim().min(6, {message: 'Passwords must be at least 6 characters long.'}),
@@ -46,7 +44,6 @@ export default function LogIn() {
 					navigate('/control-panel');
 				}
 			} catch(error) {
-				//TODO handle the error
 				console.log(error);
 			}
 		}
@@ -121,16 +118,16 @@ export default function LogIn() {
 	}
 
 	return (
-		<div>
+		<div className="flex items-center justify-center align-middle">
 			<form method='POST' onSubmit={event => submit(event)}>
 				<div>
-					<label htmlFor="username">Username</label>
-					<input type="text" id='username' name='username' value={username} onChange={e => setUsername(e.target.value)} />
+					<label className="label" htmlFor="username">Username</label>
+					<input className='text-input' type="text" id='username' name='username' value={username} onChange={e => setUsername(e.target.value)} />
 					{formErrors.username && formErrors.username.map(err => <ErrorPar key={err} msg={err}/>)}
 				</div>
 				<div>
-					<label htmlFor="password">Password</label>
-					<input type="password" id='password' name='password' value={password} onChange={e => setPassword(e.target.value)} />
+					<label className="label" htmlFor="password">Password</label>
+					<input className='text-input' type="password" id='password' name='password' value={password} onChange={e => setPassword(e.target.value)} />
 					{formErrors.password && formErrors.password.map(err => <ErrorPar key={err} msg={err}/>)}
 				</div>
 				<button className="btn-primary">Log In</button>

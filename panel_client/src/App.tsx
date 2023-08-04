@@ -37,7 +37,7 @@ const router = createBrowserRouter([
 
 function App() {
 	return (
-	<div className='bg-gradient-to-br from-zinc-950 to-zinc-800 h-screen'>
+	<div className='bg-gradient-to-br from-zinc-950 to-zinc-800 h-screen grid'>
 		<AuthContextProvider>
 			<RouterProvider router={router} />
 		</AuthContextProvider>

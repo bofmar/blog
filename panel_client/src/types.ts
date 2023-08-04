@@ -17,5 +17,5 @@ export interface IPost {
 	summary: string;
 	comments: Array<IComment>;
 	likes: number;
-	status: 'PUBLISHED' | 'UNPUBLISHED';
+	status: 'PUBLISHED' | 'UNPUBLISHED'
 }
