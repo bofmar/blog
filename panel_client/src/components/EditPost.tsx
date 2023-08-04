@@ -11,11 +11,11 @@ export default function EditPost() {
 	const {data: post, loading, error} = useFetch<IPost>(Uri.postId(postId as string));
 
 	return (
-		<>
-			<SideBar />
-			{error && !post && <p className="text-white">ERROR</p>}
-			{loading && <p className="text-white">loading...</p>}
-			{post && <PostHandler initialValue={post.body} initialTitle={post.title} initialSummary={post.summary} editPost={true}/>}
-		</>
+	<div className="grid grid-cols-12">
+		<SideBar />
+		{error && !post && <p className="text-white">ERROR</p>}
+		{loading && <p className="text-white">loading...</p>}
+		{post && <PostHandler initialValue={post.body} initialTitle={post.title} initialSummary={post.summary} editPost={true}/>}
+	</div>
 	);
 }
