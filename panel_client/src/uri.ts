@@ -2,7 +2,7 @@ export default class URI {
 	private base = 'http://localhost:5000/api';
 	#adminLogIn = '/users/admin-log-in';
 	#auth = '/users/get-auth';
-	#Posts = '/posts'
+	#Posts = '/posts';
 
 	private combine(urlPart: string){
 		return this.base + urlPart
