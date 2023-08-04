@@ -8,7 +8,7 @@ export default function AllPosts() {
 	const {data: posts, error, loading} = useFetch<Array<IPost>>(Uri.posts);
 
 	return (
-	<div>
+	<div className="col-span-10">
 		{error && !posts && <p className="text-white">ERROR</p>}
 		{loading && <p className="text-white">loading...</p>}
 		{posts && <ul className="text-white">

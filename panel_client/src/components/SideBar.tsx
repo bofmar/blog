@@ -3,13 +3,13 @@ import {} from "react-router-dom";
 
 export default function SideBar() {
 	return (
-	<aside>
-		<nav className="text-white">
-			<NavLink to='/control-panel/all'>All Posts</NavLink>
-			<NavLink to='/control-panel/unpublished'>Unpablished</NavLink>
-			<NavLink to='/control-panel/new'>New Post</NavLink>
-			<NavLink to='/control-panel/comments'>Comments</NavLink>
-			<NavLink to='/control-panel/users'>Users</NavLink>
+	<aside className="col-span-2">
+		<nav className="bg-neon-green font-mono text-lg font-semibold flex flex-col justify-center gap-5 h-full pl-10">
+			<NavLink className="hover:underline hover:scale-110" to='/control-panel/all'>All Posts</NavLink>
+			<NavLink className="hover:underline hover:scale-110" to='/control-panel/unpublished'>Unpablished</NavLink>
+			<NavLink className="hover:underline hover:scale-110" to='/control-panel/new'>New Post</NavLink>
+			<NavLink className="hover:underline hover:scale-110" to='/control-panel/comments'>Comments</NavLink>
+			<NavLink className="hover:underline hover:scale-110" to='/control-panel/users'>Users</NavLink>
 		</nav>
 	</aside>
 	);

@@ -12,11 +12,10 @@
 	}
 
 	.label {
-		@apply block mb-2 text-base font-medium text-gray-900 dark:text-gray-300;
+		@apply block mb-2 text-base font-medium text-gray-300;
 	}
 
 	.text-input {
-		@apply bg-gray-50 border border-gray-300 text-stone-300 rounded-lg mb-8 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400;
+		@apply bg-gray-700 border border-gray-600 text-stone-300 placeholder-gray-400 rounded-lg mb-8 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
 	}
 }
-
