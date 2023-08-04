@@ -15,7 +15,7 @@ export default function EditPost() {
 			<SideBar />
 			{error && !post && <p className="text-white">ERROR</p>}
 			{loading && <p className="text-white">loading...</p>}
-			{post && <PostHandler initialValue={post.body} initialTitle={post.title} initialSummary={post.summary}/>}
+			{post && <PostHandler initialValue={post.body} initialTitle={post.title} initialSummary={post.summary} editPost={true}/>}
 		</>
 	);
 }

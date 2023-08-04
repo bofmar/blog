@@ -4,14 +4,14 @@ import { Writer } from 'tinymce';
 import z from 'zod';
 import ErrorPar from './ErrorPar';
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import URI from '../uri';
-// TODO Change from saving to updating where appropriate
 
 interface IPostHandlerProps {
 	initialValue?: string;
 	initialTitle?: string;
 	initialSummary?: string;
+	editPost?: boolean;
 }
 
 interface IPostErrors {
@@ -29,7 +29,8 @@ interface IPayload {
 export default function PostHandler({
 	initialValue = "<h1>What are you going to blog about today?</h1>",
 	initialTitle = '',
-	initialSummary = ''
+	initialSummary = '',
+	editPost = false,
 	}: IPostHandlerProps ) {
 	const [editing, setEditing] = useState(true);
 	const editorRef = useRef<Writer | null>(null);
@@ -37,6 +38,7 @@ export default function PostHandler({
 	const [title, setTitle] = useState(initialTitle);
 	const [summary, setSummary] = useState(initialSummary);
 	const [formErrors, setFormErrors] = useState<IPostErrors>({title: [], summary: [], body: []});
+	const { postId } = useParams();
 	const navigate = useNavigate();
 	const Uri = new URI();
 	const TINY_KEY = import.meta.env.VITE_TINY_KEY;
@@ -59,7 +61,7 @@ export default function PostHandler({
 		body: z.string({required_error: "Pleases provide a body."}).trim().min(1, {message: 'Empty bodies are not allowed'}),
 	});
 
-	const save = async () => {
+	const createData = async (action: string) => {
 		const post: IPayload = {
 			title: title,
 			summary: summary,
@@ -73,14 +75,15 @@ export default function PostHandler({
 					body: errors.body});
 			return
 		}
-		await sendData(post);
+		await sendData(post, action);
 	}
 
-	const sendData = async (payload: IPayload) => {
+	const sendData = async (payload: IPayload, action: string) => {
 		try {
 		const loadToast = toast.loading('Please wait...');
 		const delay = 2000; //ms
 		const token = localStorage.getItem('mario-blog-key') || undefined;
+		const uri = action === 'POST' ? Uri.posts : Uri.postId(postId as string);
 
 		if(token === undefined) {
 			toast.update(loadToast, {render: 'No token present. Please save your work offsite and log in again',
@@ -88,8 +91,8 @@ export default function PostHandler({
 			return
 		}
 
-		const response = await fetch(Uri.posts, {
-			method: 'POST',
+		const response = await fetch(uri, {
+			method: action,
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json', 
 						'Authorization' : `BEARER ${token}` },
@@ -119,7 +122,7 @@ export default function PostHandler({
 			return;
 		}
 
-		toast.update(loadToast, {render: 'Post created successfully',
+		toast.update(loadToast, {render: 'Success',
 			type: 'success', isLoading: false, autoClose: delay});
 		setTimeout(() => navigate('/control-panel'), delay);
 		} catch (error) {
@@ -129,19 +132,19 @@ export default function PostHandler({
 
 
 	return (
-	<div>
-		<div className={editing? 'block' : 'hidden'}>
+	<div className="col-span-10 mt-3 mb-32 flex justify-center">
+		<div className={`flex flex-col justify-center content-center w-8/12 ${editing? 'block' : 'hidden'}`}>
 			<form onSubmit={e => e.preventDefault}>
 				<div>
-					<label htmlFor='title'>Title</label>
-					<input type='text' id='title' name='title'
+					<label className='label' htmlFor='title'>Title</label>
+					<input className='text-input' type='text' id='title' name='title'
 						placeholder='An interesting title...' required
 						value={title} onChange={e => setTitle(e.target.value)}/>
 					{formErrors.title && formErrors.title.map(err => <ErrorPar key={err} msg={err} />)}
 				</div>
 				<div>
-					<label htmlFor='summary'>Summary</label>
-					<textarea id='summary' name='summary' placeholder='An interesting take...'
+					<label className='label' htmlFor='summary'>Summary</label>
+					<textarea className='text-input resize-none h-52' id='summary' name='summary' placeholder='An interesting take...'
 						maxLength={255} required
 						value={summary} onChange={e => setSummary(e.target.value)}/>
 					{formErrors.summary && formErrors.summary.map(err => <ErrorPar key={err} msg={err} />)}
@@ -167,8 +170,12 @@ export default function PostHandler({
 				}}
 			/>
 			{formErrors.body && formErrors.body.map(err => <ErrorPar key={err} msg={err} />)}
-			<button className='btn-primary' onClick={log}>Preview</button>
-			<button className='btn-primary' onClick={save}>Save</button>
+			<div className='mt-10 flex justify-center gap-20'>
+				<button className='btn-primary' onClick={log}>Preview</button>
+				{editPost ?
+				<button className='btn-primary' onClick={() => createData('PUT')}>Update</button>
+				: <button className='btn-primary' onClick={() => createData('POST')}>Save</button>}
+			</div>
 		</div>
 		<div className={editing? 'hidden' : 'block blog blog-root'}>
 			<div ref={previewRef}>
