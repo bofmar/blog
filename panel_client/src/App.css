@@ -1,0 +1,54 @@
+.blog h1 {
+	font-size: 36px;
+	background: linear-gradient(90deg, #3fb980 0%, #009489 100%);
+	padding-bottom: 2rem;
+	color: #3fb980;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+  }
+
+  .blog * {
+	  color: white;
+  }
+
+  .blog h2, .blog h3, .blog h4 {
+	color: #3fb980;
+	padding-bottom: 1rem;
+  }
+
+  .blog h2 {
+	  font-size: 32px;
+  }
+
+  .blog h3 {
+	  font-size: 28px;
+  }
+
+  blog h4 {
+	  font-size: 24px;
+  }
+
+  .blog p {
+	  font-size: 18px;
+	  line-height: 1.6em;
+	  padding-bottom: 1rem;
+  }
+
+  .blog span, .blog a {
+	  color: #3fb980;
+  }
+
+  .blog span {
+	  font-style: bold;
+  }
+
+  .blog a {
+	  text-decoration: underline;
+  }
+
+  .blog img {
+	  margin: 0 auto;
+	  max-width: 600px;
+  }
+

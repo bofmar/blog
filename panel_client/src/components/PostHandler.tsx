@@ -177,7 +177,7 @@ export default function PostHandler({
 				: <button className='btn-primary' onClick={() => createData('POST')}>Save</button>}
 			</div>
 		</div>
-		<div className={editing? 'hidden' : 'block blog blog-root'}>
+		<div className={editing? 'hidden' : 'blog flex flex-col w-3/4'}>
 			<div ref={previewRef}>
 			</div>
 			<button className='btn-primary' onClick={edit}>Back to editing</button>
