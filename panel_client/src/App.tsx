@@ -10,6 +10,7 @@ import AllPosts from './components/AllPosts';
 import EditPost from './components/EditPost';
 import Unpublished from './components/Unpablished';
 import AllComments from './components/AllComments';
+import AllUsers from './components/AllUsers';
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
 			{path: 'all', element: <AllPosts />},
 			{path: 'unpublished', element: <Unpublished />},
 			{path: 'comments', element: <AllComments />},
+			{path: 'users', element: <AllUsers />},
 		]
 	},
 	{

@@ -9,7 +9,7 @@ export default function SideBar() {
 			<NavLink to='/control-panel/unpublished'>Unpablished</NavLink>
 			<NavLink to='/control-panel/new'>New Post</NavLink>
 			<NavLink to='/control-panel/comments'>Comments</NavLink>
-			<NavLink to='/control-panel/users'>New Post</NavLink>
+			<NavLink to='/control-panel/users'>Users</NavLink>
 		</nav>
 	</aside>
 	);
