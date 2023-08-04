@@ -87,7 +87,7 @@ export default function PostHandler({
 			return
 		}
 
-		const response = await fetch(Uri.Posts, {
+		const response = await fetch(Uri.posts, {
 			method: 'POST',
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json', 

@@ -5,7 +5,7 @@ import URI from "../uri";
 
 export default function Unpublished() {
 	const Uri = new URI;
-	const {data: posts, error, loading} = useFetch<Array<IPost>>(Uri.Posts);
+	const {data: posts, error, loading} = useFetch<Array<IPost>>(Uri.posts);
 
 	return (
 	<div>

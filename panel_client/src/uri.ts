@@ -2,7 +2,8 @@ export default class URI {
 	private base = 'http://localhost:5000/api';
 	#adminLogIn = '/users/admin-log-in';
 	#auth = '/users/get-auth';
-	#Posts = '/posts';
+	#posts = '/posts';
+	#comments = '/comments';
 
 	private combine(urlPart: string){
 		return this.base + urlPart
@@ -14,10 +15,13 @@ export default class URI {
 	get auth() {
 		return this.combine(this.#auth);
 	}
-	get Posts() {
-		return this.combine(this.#Posts);
+	get posts() {
+		return this.combine(this.#posts);
 	}
 	postId(id: string) {
-		return `${this.combine(this.#Posts)}/${id}`;
+		return `${this.combine(this.#posts)}/${id}`;
+	}
+	get comments() {
+		return this.combine(this.#comments);
 	}
 }

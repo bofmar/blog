@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 export default function AllPosts() {
 	const Uri = new URI;
-	const {data: posts, error, loading} = useFetch<Array<IPost>>(Uri.Posts);
+	const {data: posts, error, loading} = useFetch<Array<IPost>>(Uri.posts);
 
 	return (
 	<div>
