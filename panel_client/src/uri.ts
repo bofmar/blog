@@ -4,8 +4,8 @@ export default class URI {
 	#auth = '/users/get-auth';
 	#comments = '/comments';
 	#posts = '/posts';
-	#users = '/users';
 	#publish = '/posts/publish'
+	#users = '/users';
 
 	private combine(urlPart: string){
 		return this.base + urlPart

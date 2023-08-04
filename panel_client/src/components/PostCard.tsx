@@ -6,8 +6,6 @@ import del from '../svg/delete.svg';
 import { ToastContainer, toast } from "react-toastify";
 import URI from "../uri";
 
-// TODO add controls for delete button
-
 interface IPostCardProps {
 	post: IPost;
 }
@@ -16,7 +14,7 @@ export default function PostCard({post}: IPostCardProps) {
 	const navigate = useNavigate();
 	const Uri = new URI();
 
-	const publish = async () => {
+	const handleClick = async (action: string) => {
 		try {
 		const loadToast = toast.loading('Please wait...');
 		const delay = 2000; //ms
@@ -28,12 +26,14 @@ export default function PostCard({post}: IPostCardProps) {
 			return
 		}
 
-		const response = await fetch(Uri.publish(post._id), {
-			method: 'PUT',
+		const uri = action === 'PUT' ? Uri.publish(post._id) : Uri.postId(post._id);
+
+		const response = await fetch(uri, {
+			method: action,
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json', 
 						'Authorization' : `BEARER ${token}` },
-			body: JSON.stringify({msg: `Change publish status for ${post._id}`})
+			body: JSON.stringify({})
 		});
 		const data = await response.json();
 
@@ -49,7 +49,7 @@ export default function PostCard({post}: IPostCardProps) {
 			return;
 		}
 
-		toast.update(loadToast, {render: 'Post created successfully',
+		toast.update(loadToast, {render: 'Success',
 			type: 'success', isLoading: false, autoClose: delay});
 		setTimeout(() => window.location.reload(), delay);
 		} catch (error) {
@@ -66,13 +66,13 @@ export default function PostCard({post}: IPostCardProps) {
 				<img className="w-6 inline ml-5" src={heart} />
 			</span>
 			<div className="mt-5 flex gap-5">
-				<button className="btn-primary" onClick={() => publish()}>
+				<button className="btn-primary" onClick={() => handleClick('PUT')}>
 					{post.status === 'PUBLISHED' ? 'Unpublish' : 'Publish'}
 				</button>
 				<button className="btn-primary flex gap-2" onClick={() => navigate(`/posts/${post._id}`)}>
 					<img className='w-6' src={edit} />Edit
 				</button>
-				<button className="btn-secondary flex gap-2">
+				<button className="btn-secondary flex gap-2" onClick={() => handleClick('DELETE')}>
 					<img className='w-6' src={del} />Delete
 				</button>
 			</div>
