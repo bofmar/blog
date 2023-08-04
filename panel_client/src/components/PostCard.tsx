@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { IPost } from "../types";
 import heart from '/heart.png';
 import edit from '../svg/edit.svg';
@@ -9,6 +9,7 @@ interface IPostCardProps {
 }
 
 export default function PostCard({post}: IPostCardProps) {
+	const navigate = useNavigate();
 	return (
 		<div className="font-sans w-[600px]">
 			<NavLink className="text-neon-green text-xl font-bold underline hover:text-off-green" to={`/posts/${post._id}`}>{post.title}</NavLink>
@@ -19,7 +20,7 @@ export default function PostCard({post}: IPostCardProps) {
 			</span>
 			<div className="mt-5 flex gap-5">
 				<button className="btn-primary">{post.status === 'PUBLISHED' ? 'Unpublish' : 'Publish'}</button>
-				<button className="btn-primary flex gap-2">
+				<button className="btn-primary flex gap-2" onClick={() => navigate(`/posts/${post._id}`)}>
 					<img className='w-6' src={edit} />Edit
 				</button>
 				<button className="btn-secondary flex gap-2">
