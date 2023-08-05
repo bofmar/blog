@@ -1,42 +1,54 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.blog h1 {
+	font-size: 36px;
+	background: linear-gradient(90deg, #3fb980 0%, #009489 100%);
+	padding-bottom: 2rem;
+	color: #3fb980;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
   }
-  to {
-    transform: rotate(360deg);
+
+  .blog * {
+	  color: white;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .blog h2, .blog h3, .blog h4 {
+	color: #3fb980;
+	padding-bottom: 1rem;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .blog h2 {
+	  font-size: 32px;
+  }
 
-.read-the-docs {
-  color: #888;
-}
+  .blog h3 {
+	  font-size: 28px;
+  }
+
+  blog h4 {
+	  font-size: 24px;
+  }
+
+  .blog p {
+	  font-size: 18px;
+	  line-height: 1.6em;
+	  padding-bottom: 1rem;
+  }
+
+  .blog span, .blog a {
+	  color: #3fb980;
+  }
+
+  .blog span {
+	  font-style: bold;
+  }
+
+  .blog a {
+	  text-decoration: underline;
+  }
+
+  .blog img {
+	  margin: 0 auto;
+	  max-width: 600px;
+  }
+
