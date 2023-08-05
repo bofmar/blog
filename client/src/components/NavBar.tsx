@@ -17,7 +17,7 @@ export default function NavBar() {
 		<NavLink className="hover:underline hover:scale-110" to='/'>Sign Up</NavLink>
 		}
 		{Auth && Auth.user &&
-		<NavLink className="hover:underline hover:scale-110" to='/'>Log Out</NavLink>
+		<button className="hover:underline hover:scale-110" onClick={() => Auth.logOut()} >Log Out</button>
 		}
 	</nav>
 	);
