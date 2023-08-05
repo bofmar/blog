@@ -1,5 +1,5 @@
 export default class URI {
-	private base = 'http://localhost:5000/api';
+	private base = 'https://blog-api-8tzb.onrender.com/api';
 	#adminLogIn = '/users/admin-log-in';
 	#auth = '/users/get-auth';
 	#comments = '/comments';
