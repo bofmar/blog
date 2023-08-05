@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css'
 import Home from './components/Home';
+import { AuthContextProvider } from './hooks/AuthContext';
 
 function App() {
 	const router = createBrowserRouter([
@@ -12,7 +13,9 @@ function App() {
 
 	return (
 		<div className='bg-gradient-to-br from-zinc-950 to-zinc-800 min-h-screen'>
-			<RouterProvider router={router} />
+			<AuthContextProvider>
+				<RouterProvider router={router} />
+			</AuthContextProvider>
 		</div>
 	);
 }
