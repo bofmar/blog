@@ -17,7 +17,7 @@ interface IErrors {
 	password: Array<string> | undefined;
 }
 
-export default function LogIn() {
+export default function SignUp() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [formErrors, setFormErrors] = useState<IErrors>({username: [], password: []});
@@ -49,7 +49,7 @@ export default function LogIn() {
 			password : password,
 		}
 
-		const response = await fetch(Uri.adminLogIn, {
+		const response = await fetch(Uri.sigUp, {
 			method: 'POST',
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json' },
@@ -63,13 +63,6 @@ export default function LogIn() {
 			setFormErrors({username: errors.username, password: errors.password});
 			return;
 		}
-
-		if (response.status === 403) {
-			toast.update(loadToast, {render: data.data,
-				type: 'error', isLoading: false, autoClose: delay});
-			return;
-		}
-
 
 		if (response.status !== 200) {
 			toast.update(loadToast, {render: 'Something went wrong. Please try again.',
@@ -109,7 +102,7 @@ export default function LogIn() {
 					<input className='text-input' type="password" id='password' name='password' value={password} onChange={e => setPassword(e.target.value)} />
 					{formErrors.password && formErrors.password.map(err => <ErrorPar key={err} msg={err}/>)}
 				</div>
-				<button className="btn-primary">Log In</button>
+				<button className="btn-primary">Sign Up</button>
 			</form>
 			<ToastContainer theme='dark' />
 		</div>

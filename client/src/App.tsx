@@ -4,6 +4,7 @@ import './App.css'
 import Home from './components/Home';
 import { AuthContextProvider } from './hooks/AuthContext';
 import LogIn from './components/LogIn';
+import SignUp from './components/SingUp';
 
 function App() {
 	const router = createBrowserRouter([
@@ -14,6 +15,10 @@ function App() {
 		{
 			path: '/log-in',
 			element: <LogIn />
+		},
+		{
+			path: '/sign-up',
+			element: <SignUp />
 		},
 	]);
 

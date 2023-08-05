@@ -26,9 +26,7 @@ export const AuthContextProvider = ({children}: IAuthProps) => {
 	const logOut = () => {
 		setAuthorized(false);
 		setUser(null);
-		console.log('hi');
 		localStorage.removeItem('mario-blog-key');
-		console.log(localStorage);
 	}
 
 	return <AuthContext.Provider value={{isAuthorized, logIn, logOut, user}}>
