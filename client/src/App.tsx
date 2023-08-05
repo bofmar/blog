@@ -5,6 +5,7 @@ import Home from './components/Home';
 import { AuthContextProvider } from './hooks/AuthContext';
 import LogIn from './components/LogIn';
 import SignUp from './components/SingUp';
+import Post from './components/Post';
 
 function App() {
 	const router = createBrowserRouter([
@@ -19,6 +20,10 @@ function App() {
 		{
 			path: '/sign-up',
 			element: <SignUp />
+		},
+		{
+			path: '/:postId',
+			element: <Post />
 		},
 	]);
 
