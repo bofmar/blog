@@ -11,7 +11,7 @@ export default function AllUsers() {
 	<div className="col-span-10 flex flex-col justify-center content-center items-center my-32">
 		{error && !users && <p className="text-white">ERROR</p>}
 		{loading && <p className="text-white">loading...</p>}
-		{users && <ol className="text-white">
+		{users && <ol className="text-white flex flex-col gap-20 justify-center content-center items-center">
 						{users.map((user, i) => <li key={user._id}>
 							<UserCard user={user} index={i} />
 						</li>)}

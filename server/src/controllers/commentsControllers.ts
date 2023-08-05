@@ -92,9 +92,11 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
 
 		// the only one who should be able to delete a comment is the user
 		// who created it or the admin.
-		if (!comment.createdBy._id.equals(user._id) && user.authLevel !== 'ADMIN') {
+		if ((!comment.createdBy && user.authLevel !== 'ADMIN') || 
+			(comment.createdBy && !comment.createdBy._id.equals(user._id) && user.authLevel !== 'ADMIN')) {
 			return res.status(403).json({success: false, errors: null, data: null});
 		}
+
 
 		await Comment.findByIdAndDelete(comment._id).exec();	
 		res.send({success: true, errors: null, data: comment});

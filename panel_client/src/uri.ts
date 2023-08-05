@@ -32,4 +32,7 @@ export default class URI {
 	publish(id: string) {
 		return `${this.combine(this.#publish)}/${id}`;
 	}
+	commentId(id: string) {
+		return `${this.combine(this.#comments)}/${id}`;
+	}
 }

@@ -10,7 +10,6 @@ function padLeft(num: number) {
 	for (let i = str.length; i < 3; i++) {
 		str = ' ' + str;
 	}
-	console.log(str);
 	return str;
 }
 
