@@ -27,9 +27,10 @@ export default function LogIn() {
 	const Uri = new URI();
 
 	useEffect(() => {
-		if(token !== 'undefined') {
-			navigate('/');
+		if(!token || token === 'undefined') {
+			return;
 		}
+		navigate('/');
 	}, []);
 
 	const validateInput = () => {
@@ -49,7 +50,7 @@ export default function LogIn() {
 			password : password,
 		}
 
-		const response = await fetch(Uri.adminLogIn, {
+		const response = await fetch(Uri.logIn, {
 			method: 'POST',
 			mode: 'cors',
 			headers: { 'Content-Type' : 'application/json' },
@@ -63,13 +64,6 @@ export default function LogIn() {
 			setFormErrors({username: errors.username, password: errors.password});
 			return;
 		}
-
-		if (response.status === 403) {
-			toast.update(loadToast, {render: data.data,
-				type: 'error', isLoading: false, autoClose: delay});
-			return;
-		}
-
 
 		if (response.status !== 200) {
 			toast.update(loadToast, {render: 'Something went wrong. Please try again.',

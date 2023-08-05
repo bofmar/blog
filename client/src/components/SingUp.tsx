@@ -27,9 +27,10 @@ export default function SignUp() {
 	const Uri = new URI();
 
 	useEffect(() => {
-		if(token !== 'undefined') {
-			navigate('/');
+		if(!token || token === 'undefined') {
+			return;
 		}
+		navigate('/');
 	}, []);
 
 	const validateInput = () => {

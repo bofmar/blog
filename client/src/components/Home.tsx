@@ -44,7 +44,8 @@ export default function Home() {
 	return (
 	<div>
 		<NavBar />
-		<div className="flex flex-col justify-center content-center py-32">
+		<div className="flex flex-col justify-center content-center pb-32">
+			<h1 className="text-2xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-neon-green to-off-green py-32 center">One Ordinary Dev</h1>
 			{error && !posts && <p className="text-white">ERROR</p>}
 			{loading && <p className="text-white">loading...</p>}
 			{posts && <ul className="text-white flex flex-col gap-20 justify-center content-center items-center">

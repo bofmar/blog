@@ -7,6 +7,7 @@ export default class URI {
 	#publish = '/posts/publish'
 	#users = '/users';
 	#signUp = '/users/sign-up';
+	#logIn = '/users/log-in';
 
 	private combine(urlPart: string){
 		return this.base + urlPart
@@ -38,5 +39,8 @@ export default class URI {
 	}
 	get sigUp() {
 		return this.combine(this.#signUp);
+	}
+	get logIn() {
+		return this.combine(this.#logIn);
 	}
 }
