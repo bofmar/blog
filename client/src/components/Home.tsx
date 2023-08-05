@@ -44,13 +44,13 @@ export default function Home() {
 	return (
 	<div>
 		<NavBar />
-		<div className="col-span-10 flex flex-col justify-center content-center my-32">
+		<div className="flex flex-col justify-center content-center py-32">
 			{error && !posts && <p className="text-white">ERROR</p>}
 			{loading && <p className="text-white">loading...</p>}
 			{posts && <ul className="text-white flex flex-col gap-20 justify-center content-center items-center">
-							{posts.map(post => <li key={post._id}>
+							{posts.map(post => post.status === 'PUBLISHED' ? <li key={post._id}>
 								<PostCard post={post} />
-							</li>)}
+							</li> : null)}
 						</ul>}
 		</div>
 	</div>

@@ -27,7 +27,7 @@ export default function SignUp() {
 	const Uri = new URI();
 
 	useEffect(() => {
-		if(token) {
+		if(token !== 'undefined') {
 			navigate('/');
 		}
 	}, []);
