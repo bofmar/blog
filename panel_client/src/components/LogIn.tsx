@@ -118,7 +118,7 @@ export default function LogIn() {
 	}
 
 	return (
-		<div className="flex items-center justify-center align-middle">
+		<div className="flex items-center justify-center align-middle h-screen">
 			<form method='POST' onSubmit={event => submit(event)}>
 				<div>
 					<label className="label" htmlFor="username">Username</label>
