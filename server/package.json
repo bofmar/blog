@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "tsc --watch & node --watch dist/server.js",
-    "run": "node dist/server.js"
+    "start": "node dist/server.js"
   },
   "author": "Marios Mpofilakis",
   "license": "MIT",
