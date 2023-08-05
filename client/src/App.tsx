@@ -1,13 +1,19 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 import Home from './components/Home';
 import { AuthContextProvider } from './hooks/AuthContext';
+import LogIn from './components/LogIn';
 
 function App() {
 	const router = createBrowserRouter([
 		{
 			path: '/',
 			element: <Home />
+		},
+		{
+			path: '/log-in',
+			element: <LogIn />
 		},
 	]);
 

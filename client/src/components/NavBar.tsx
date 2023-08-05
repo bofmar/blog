@@ -11,7 +11,7 @@ export default function NavBar() {
 		<NavLink className="hover:underline hover:scale-110" to='/'>Home</NavLink>
 		<a className="hover:underline hover:scale-110" href="https://mpofilakis.netlify.app/" target="_blank">About</a>
 		{Auth && !Auth.user &&
-		<NavLink className="hover:underline hover:scale-110" to='/'>Log In</NavLink>
+		<NavLink className="hover:underline hover:scale-110" to='/log-in'>Log In</NavLink>
 		}
 		{Auth && !Auth.user &&
 		<NavLink className="hover:underline hover:scale-110" to='/'>Sign Up</NavLink>
