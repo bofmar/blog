@@ -170,3 +170,59 @@ export const deletePost = async (req: Request, res: Response, next: NextFunction
 		next(error);
 	}
 }
+
+export const like = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const isAuthorized = await authUser(req.headers['authorization']);
+
+		if (!isAuthorized) {
+			return res.status(403).json({success: false, errors: null, data: 'Not authorized'});
+		}
+		const secret = process.env.SECRET as string;
+		const payload = getPayloadFromHeader(req.headers['authorization'] as string, secret) as JwtPayload;
+
+		const user = await User.findOne({username: payload.username}).exec();
+
+		const post = await BlogPost.findById(req.params.postId).populate('comments').exec();
+		if (!post) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+		const newUserLikes = [... user!.likedPostIds, req.params.postId];
+
+		await BlogPost.findOneAndUpdate(post._id, { $inc: { 'likes': 1}}).exec();
+		await User.findByIdAndUpdate(user!._id, { 'likedPostIds': newUserLikes }).exec();
+
+		res.send({success: true, errors: null, data: post});
+	} catch (error) {
+		next(error);
+	}
+}
+
+export const dislike = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const isAuthorized = await authUser(req.headers['authorization']);
+
+		if (!isAuthorized) {
+			return res.status(403).json({success: false, errors: null, data: 'Not authorized'});
+		}
+		const secret = process.env.SECRET as string;
+		const payload = getPayloadFromHeader(req.headers['authorization'] as string, secret) as JwtPayload;
+
+		const user = await User.findOne({username: payload.username}).exec();
+
+		const post = await BlogPost.findById(req.params.postId).populate('comments').exec();
+		if (!post) {
+			return res.status(400).json({success: false, errors: null, data: null});
+		}
+		const newUserLikes = [... user!.likedPostIds];
+		const index = newUserLikes.indexOf(req.params.postId);
+		newUserLikes.splice(index, 1);
+
+		await BlogPost.findOneAndUpdate(post._id, { $inc: { 'likes': -1}}).exec();
+		await User.findByIdAndUpdate(user!._id, { 'likedPostIds': newUserLikes }).exec();
+
+		res.send({success: true, errors: null, data: post});
+	} catch (error) {
+		next(error);
+	}
+}

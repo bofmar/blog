@@ -16,6 +16,10 @@ route.put('/publish/:postId', passport.authorize('jwt'), postControls.changePubl
 
 route.put('/:postId', passport.authorize('jwt'), postControls.updatePost);
 
+route.put('/:postId/like', passport.authorize('jwt'), postControls.like);
+
+route.put('/:postId/dislike', passport.authorize('jwt'), postControls.dislike);
+
 route.delete('/:postId', passport.authorize('jwt'), postControls.deletePost);
 
 export default route;
