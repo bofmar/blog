@@ -2,6 +2,7 @@ export interface IUser {
 	_id: string;
 	username: string;
 	authLevel: 'USER' | 'ADMIN';
+	likedPostIds: Array<string> ;
 }
 
 export interface IComment {

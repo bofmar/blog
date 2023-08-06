@@ -3,7 +3,8 @@
 }
 
 .blog h1 {
-	font-size: 36px;
+	font-size: 52px;
+	text-align: center;
 	background: linear-gradient(90deg, #3fb980 0%, #009489 100%);
 	padding-bottom: 2rem;
 	color: #3fb980;
@@ -58,4 +59,10 @@ blog h4 {
 
 .center {
 	margin: 0 auto;
+}
+
+@media(max-width: 650px) {
+	.blog img {
+		max-width: 300px;
+	}
 }

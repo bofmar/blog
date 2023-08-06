@@ -21,17 +21,9 @@ export default function SignUp() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [formErrors, setFormErrors] = useState<IErrors>({username: [], password: []});
-	const token = localStorage.getItem('mario-blog-key') || undefined;
 	const Auth = useContext(AuthContext);
 	const navigate = useNavigate();
 	const Uri = new URI();
-
-	useEffect(() => {
-		if(!token || token === 'undefined') {
-			return;
-		}
-		navigate('/');
-	}, []);
 
 	const validateInput = () => {
 		const validationResult = ZUser.safeParse({username: username, password: password});

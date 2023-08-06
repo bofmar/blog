@@ -1,5 +1,6 @@
 export default class URI {
-	private base = 'https://blog-api-8tzb.onrender.com/api';
+//	private base = 'https://blog-api-8tzb.onrender.com/api';
+	private base = 'http://localhost:5000/api';
 	#adminLogIn = '/users/admin-log-in';
 	#auth = '/users/get-auth';
 	#comments = '/comments';
@@ -42,5 +43,11 @@ export default class URI {
 	}
 	get logIn() {
 		return this.combine(this.#logIn);
+	}
+	like(id: string) {
+		return `${this.combine(this.#posts)}/${id}/like`;
+	}
+	dislike(id: string) {
+		return `${this.combine(this.#posts)}/${id}/dislike`;
 	}
 }
