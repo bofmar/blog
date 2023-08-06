@@ -5,6 +5,7 @@ import { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from "../models/user.js";
 import getPayloadFromHeader from "../helpers/getPayloadFromHeader.js";
+import BlogPost from "../models/blogPost.js";
 
 dotenv.config();
 
@@ -63,8 +64,10 @@ export const createComment = async (req: Request, res: Response, next: NextFunct
 			text: req.body.comment,
 			createdBy: user,
 		});
+		const post = await BlogPost.findById(req.body.post).exec();
 
 		await comment.save();
+		await BlogPost.findByIdAndUpdate(req.body.post, {'comments': [...post!.comments, comment]}).exec();
 		res.send({success: true, errors: null, data: comment});
 	} catch (error) {
 		next(error);
