@@ -20,6 +20,32 @@ export default function Post() {
 	const [likes, setLikes] = useState(post?.likes);
 	const blogRef = useRef<HTMLDivElement | null>(null);
 	const [userLiked, setUserLiked] = useState(liked());
+	const token = localStorage.getItem('mario-blog-key') || undefined;
+
+	useEffect(() => {
+		if(token === undefined) {
+			return;
+		}
+		const abort = new AbortController();
+		async function getAuth() {
+			try {
+				const response = await fetch(Uri.auth, { 
+					signal: abort.signal,
+					mode: 'cors',
+					headers: { 'Authorization' : `BEARER: ${token}` },
+				});
+				const resData = await response.json();
+				if (resData.success) {
+					Auth?.logIn(resData.data);
+				}
+			} catch(error) {
+				console.log(error);
+			}
+		}
+		getAuth();
+		return () => {
+		}
+	}, []);
 
 	useEffect(() => {
 		if(post && blogRef.current) {
