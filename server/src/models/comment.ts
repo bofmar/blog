@@ -4,6 +4,7 @@ import User from "./user.js";
 const Schema = mongoose.Schema;
 
 export type TComment = {
+	_id: string,
 	text: string,
 	createdBy: Types.ObjectId,
 }

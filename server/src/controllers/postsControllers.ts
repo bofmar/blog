@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import getPayloadFromHeader from "../helpers/getPayloadFromHeader.js";
 import { JwtPayload } from "jsonwebtoken";
 import User from "../models/user.js";
+import Comment, { TComment } from "../models/comment.js";
 
 dotenv.config();
 
@@ -71,13 +72,27 @@ export const allPosts = async (_req: Request, res: Response, next: NextFunction)
 	}
 }
 
+const getComments = async (arr: Array<TComment>) => {
+	return arr.map(async (c) => await Comment.findById(c._id).populate('createdBy').exec());
+}
+
 export const onePost = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const post = await BlogPost.findById(req.params.postId).populate('comments').exec();
 		if (!post) {
 			return res.status(400).json({success: false, errors: null, data: null});
 		}
-		res.json({success: true, errors: null, data: post});
+		const comments = await Promise.all(await getComments(post.comments as unknown as Array<TComment>));
+		const payload = new BlogPost({
+			_id: post._id,
+			title: post.title,
+			summary: post.summary,
+			body: post.body,
+			likes: post.likes,
+			comments: comments,
+			status: post.status
+		})
+		res.json({success: true, errors: null, data: payload});
 	} catch (error) {
 		next(error);
 	}
