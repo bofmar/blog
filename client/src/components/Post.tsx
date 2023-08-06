@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import { IComment, IPost } from "../types";
+import { IPost } from "../types";
 import URI from "../uri";
-import { useContext, useEffect, useRef, useState } from "react";
+import { MouseEvent, useContext, useEffect, useRef, useState } from "react";
 import NavBar from "./NavBar";
 import heart from '/heart.png';
 import emptyHeart from '../svg/empty-heart.svg';
@@ -120,7 +120,7 @@ export default function Post() {
 
 	const ZComment = z.string({required_error: "Please provide a comment."}).trim().min(20, {message: 'Comments must be at least 20 characters long'});
 
-	const sendComment = async (e: MouseEvent) => {
+	const sendComment = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		try {
 		if (!Auth || !Auth.user || !ZComment.safeParse(userComment).success) {
