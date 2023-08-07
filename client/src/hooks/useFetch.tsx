@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface IReturnType<T> {
 	data: T | null;
@@ -12,14 +11,9 @@ export default function useFetch<T>(url: string): IReturnType<T> {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const token = localStorage.getItem('mario-blog-key') || undefined;
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		const abort = new AbortController();
-		if (token === undefined) {
-			navigate('/');			
-			return
-		}
 
 		setLoading(true);
 
@@ -27,7 +21,7 @@ export default function useFetch<T>(url: string): IReturnType<T> {
 			try {
 				const response = await fetch(url,{
 					signal: abort.signal,
-					headers: { 'Authorization' : `BEARER: ${token}` },
+					headers: token ? { 'Authorization' : `BEARER: ${token}` } : {},
 					} 
 				);
 				const resData = await response.json();
