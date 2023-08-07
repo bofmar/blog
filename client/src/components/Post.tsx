@@ -10,6 +10,7 @@ import { AuthContext } from "../hooks/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import CommnetCard from "./CommentCard";
 import { z } from "zod";
+import { NavLink } from "react-router-dom";
 
 export default function Post() {
 	const Auth = useContext(AuthContext);
@@ -186,8 +187,9 @@ export default function Post() {
 				<div className="text-sm text-stone-400 pb-5">Minimu 20 characters</div>
 				<button className="btn-primary" onClick={(e) => sendComment(e)}>Submit</button>
 			</form> :
-			<div>
-				Logged out
+			<div className="flex flex-col jusify-center items-center mt-8">
+				<p>If you'd like to leave a comment, please <NavLink to='/log-in'>Log In</NavLink></p>
+				<p>Don't have an account? <NavLink to='/sign-up'>Sign up!</NavLink></p>
 			</div>}
 			<div className="col-span-10 flex flex-col justify-center content-center items-center my-32">
 				{post.comments && <ul className="text-white flex flex-col gap-20 justify-center content-center items-center">
